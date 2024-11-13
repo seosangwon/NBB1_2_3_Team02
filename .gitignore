@@ -48,3 +48,8 @@ application-secret.yml
 
 # Ignore ProductService file
 /src/main/kotlin/edu/example/kotlindevelop/domain/product/service/ProductService.kt
+
+#infra#
+/src/main/generated/
+.terraform
+terraform.tfvars
