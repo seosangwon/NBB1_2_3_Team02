@@ -1,14 +1,35 @@
-# GraalVM을 기반 이미지로 사용
-FROM ghcr.io/graalvm/graalvm-community:21
+# 첫 번째 스테이지: 빌드 스테이지
+FROM gradle:jdk21-graal-jammy as builder
 
 # 작업 디렉토리 설정
 WORKDIR /app
 
-# 호스트 시스템의 build/libs 디렉토리 내의 모든 .jar 파일을
-# 컨테이너의 /app 디렉토리로 복사
-COPY build/libs/*.jar /app/app.jar
+# 소스 코드와 Gradle 래퍼 복사
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+
+# Gradle 래퍼에 실행 권한 부여
+RUN chmod +x ./gradlew
+
+# 종속성 설치
+RUN ./gradlew dependencies --no-daemon
+
+# 소스 코드 복사
+COPY src src
+
+# 애플리케이션 빌드
+RUN ./gradlew build --no-daemon
+
+# 두 번째 스테이지: 실행 스테이지
+FROM ghcr.io/graalvm/jdk-community:21
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 첫 번째 스테이지에서 빌드된 JAR 파일 복사
+COPY --from=builder /app/build/libs/*.jar app.jar
 
 # 실행할 JAR 파일 지정
-# 여기서는 단일 JAR 파일을 가정하고 있지만, 여러 파일이 있는 경우
-# 실행할 특정 파일을 지정해야 합니다.
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "app.jar"]
