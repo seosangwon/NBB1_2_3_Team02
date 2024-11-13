@@ -63,8 +63,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER_LC }}/devbe3_3:${{ needs.makeTagAndRelease.outputs.tag_name }},
-            ghcr.io/${{ env.OWNER_LC }}/devbe3_3:latest
+            ghcr.io/${{ env.OWNER_LC }}/nbb1_2_3_team02:${{ needs.makeTagAndRelease.outputs.tag_name }},
+            ghcr.io/${{ env.OWNER_LC }}/nbb1_2_3_team02:latest
   deploy:
     runs-on: ubuntu-latest
     needs: [ buildImageAndPush ]
@@ -80,7 +80,7 @@ jobs:
           working-directory: /
           comment: Deploy
           command: |
-            mkdir -p /docker_projects/devbe3_3
-            curl -o /docker_projects/devbe3_3/zero_downtime_deploy.py https://raw.githubusercontent.com/seosangwon/devbe3_3/release/infraScript/zero_downtime_deploy.py
-            chmod +x /docker_projects/devbe3_3/zero_downtime_deploy.py
-            /docker_projects/devbe3_3/zero_downtime_deploy.py
+            mkdir -p /docker_projects/nbb1_2_3_team02
+            curl -o /docker_projects/nbb1_2_3_team02/zero_downtime_deploy.py https://raw.githubusercontent.com/seosangwon/NBB1_2_3_Team02/release/infraScript/zero_downtime_deploy.py
+            chmod +x /docker_projects/nbb1_2_3_team02/zero_downtime_deploy.py
+            /docker_projects/nbb1_2_3_team02/zero_downtime_deploy.py
