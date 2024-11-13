@@ -13,8 +13,8 @@ class ServiceManager:
         self.socat_port: int = socat_port
         self.sleep_duration: int = sleep_duration
         self.services: Dict[str, int] = {
-            'devBE3_3_1': 8081,
-            'devBE3_3_2': 8082
+            'devbe3_3_1': 8081,
+            'devbe3_3_2': 8082
         }
         self.current_name: Optional[str] = None
         self.current_port: Optional[int] = None
@@ -26,7 +26,7 @@ class ServiceManager:
         cmd: str = f"ps aux | grep 'socat -t0 TCP-LISTEN:{self.socat_port}' | grep -v grep | awk '{{print $NF}}'"
         current_service: str = subprocess.getoutput(cmd)
         if not current_service:
-            self.current_name, self.current_port = 'devBE3_3_2', self.services['devBE3_3_2']
+            self.current_name, self.current_port = 'devbe3_3_2', self.services['devbe3_3_2']
         else:
             self.current_port = int(current_service.split(':')[-1])
             self.current_name = next((name for name, port in self.services.items() if port == self.current_port), None)
@@ -46,7 +46,7 @@ class ServiceManager:
     # Docker 컨테이너를 실행하는 함수
     def _run_container(self, name: str, port: int) -> None:
         os.system(
-            f"docker run --name={name} -p {port}:8080 -v /docker_projects/devBE3_3/volumes/gen:/gen --restart unless-stopped -e TZ=Asia/Seoul --pull always -d ghcr.io/seosangwon/devBE3_3")
+            f"docker run --name={name} -p {port}:8080 -v /docker_projects/devbe3_3/volumes/gen:/gen --restart unless-stopped -e TZ=Asia/Seoul --pull always -d ghcr.io/seosangwon/devBE3_3")
 
     def _switch_port(self) -> None:
         # Socat 포트를 전환하는 함수
