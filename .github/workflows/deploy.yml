@@ -84,3 +84,4 @@ jobs:
             curl -o /docker_projects/nbb1_2_3_team02/zero_downtime_deploy.py https://raw.githubusercontent.com/seosangwon/NBB1_2_3_Team02/release/infraScript/zero_downtime_deploy.py
             chmod +x /docker_projects/nbb1_2_3_team02/zero_downtime_deploy.py
             /docker_projects/nbb1_2_3_team02/zero_downtime_deploy.py
+
