@@ -5,9 +5,9 @@ spring:
     multipart:
       max-file-size: 5MB
   datasource:
-    url: ${custom.datasource.url}
-    username: ${custom.datasource.username}
-    password: ${custom.datasource.password}
+    url: ${spring.custom.datasource.url}
+    username: ${spring.custom.datasource.username}
+    password: ${spring.custom.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
